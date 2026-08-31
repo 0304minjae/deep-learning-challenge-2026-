@@ -21,17 +21,29 @@ Qwen2.5-3B-Instruct 기반 수학 문제 풀이 시스템입니다.
 
 ### 재현 방법
 
-```
-notebooks/FINAL_submit_0831.ipynb
-```
+`FINAL_submit_0831.ipynb`
 
-1. `test_submission.csv`를 Kaggle Dataset으로 업로드 후 노트북 Input에 추가
-2. Accelerator = GPU T4 x2, Internet = On
-3. **Save Version → Save & Run All (Commit)**
-4. Output의 `submission.csv` 다운로드
+**Kaggle Notebooks 기준 실행 절차**
 
-`seed=42`가 고정되어 있어 동일 환경에서 같은 결과가 재현됩니다.
-소요 시간은 2,000문제 기준 약 5시간 40분입니다.
+1. 테스트 CSV(`id, question, answer` 컬럼)를 Kaggle Dataset으로 업로드
+2. 노트북 Input에 **해당 Dataset 하나만** 추가
+   - ⚠️ `[3]` 셀이 `/kaggle/input/` 아래에서 파일명에 `test`가 포함된 csv를 찾습니다.
+     **해당 조건에 맞는 csv가 정확히 1개여야 합니다.** 여러 개면 `assert`로 중단됩니다.
+   - 파일명이 다르거나 여러 개인 경우, `[3]` 셀의 `TEST_PATH`를 직접 지정하시면 됩니다:
+```python
+     TEST_PATH = "/kaggle/input/<경로>/<파일명>.csv"
+```
+3. Settings: **Accelerator = GPU T4 x2**, **Internet = On**
+4. **Save Version → Save & Run All (Commit)**
+   - 대화형 세션은 유휴 시 커널이 재시작되므로 장시간 추론에 부적합합니다
+5. Output의 `submission.csv`가 결과물입니다
+
+**소요 시간**: 2,000문제 기준 약 6시간 30분 (T4 1장, 문제당 32샘플)
+**재현성**: `seed=42` 고정. 동일 환경에서 같은 결과가 나옵니다.
+
+**다른 환경에서 실행하는 경우**
+`[2]` 셀의 protobuf 처리는 Kaggle 환경 특유의 충돌을 회피하기 위한 것입니다.
+표준 PyTorch 환경에서는 `pip install vllm`만으로 충분하며, `[2]` 셀을 건너뛰어도 됩니다.
 
 ---
 
