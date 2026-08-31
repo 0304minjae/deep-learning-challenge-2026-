@@ -253,7 +253,7 @@ float은 유효숫자 15~16자리까지만 정확하므로, 문자열 → `int()
 - 학습 방식: QLoRA (4bit NF4, double quant), fp16, gradient checkpointing
 - 학습 데이터: train 매칭 12,198 + NuminaMath 무작위 + RFT, 총 20,000개
 - 파일 크기: 479MB (GitHub 100MB 제한으로 별도 링크)
-- 다운로드: **(여기에 Hugging Face 또는 구글 드라이브 링크를 넣으세요)**
+- 다운로드: https://huggingface.co/alswo0304/qwen25-3b-v2-lora
 
 재현 코드: `notebooks/train_v2_qlora.ipynb`
 
